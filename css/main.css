@@ -3,6 +3,10 @@ body {
   padding: 0;
 }
 
+@font-face {
+  font-family: "ThisIsMyFont";
+  src: url(/fonts/GameofThrones.ttf)
+}
 
 .left-div {
   position: fixed;
@@ -11,6 +15,7 @@ body {
   background-image: url(/assets/site/mapblue.jpg);
   background-size: 850px;
   background-position: top;
+  padding: 10px;
 }
 
 .right-div {
@@ -21,39 +26,118 @@ body {
   width: 23%;
 }
 
-div>div {
+.left-div__main {
   display: inline-block;
-  margin: 7px 5px;
+  padding: 5px 5px;
+  width: 11%;
+  height: 0;
   text-align: center;
+  position: relative;
 }
 
-div>div>img {
-  width: 45%;
+.main__click-on {
+  width: 52px;
   margin: 0;
   transition-duration: 0.3s;
   cursor: pointer;
 }
 
-div>div>img:hover {
+.main__click-on:hover {
   transform: scale(1.2);
-}
-
-div>div>span {
-  font-size: 13px;
 }
 
 input {
   position: fixed;
   bottom: 10px;
   right: 1%;
+  border-radius: 3px;
+  border: 2px solid #aaa;
+  transition-duration: 0.5s;
+  outline: none;
+  width: 180px;
+}
+
+input:focus {
+  box-shadow: 0 0 7px 0 rgb(160, 140, 102);
 }
 
 button {
   position: fixed;
   bottom: 10px;
-  right: 15%;
+  right: 16.5%;
+  border-radius: 3px;
+  border: 2px solid #aaa;
+  outline: none;
+  transition-duration: 0.5s;
+  background-color: #aaa;
+  font-weight: 600;
 }
 
-.righ-div__character {
-  height: 200px;
+button:hover {
+  box-shadow: 0 0 6px 0 rgb(160, 140, 102);
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+span,
+button,
+input,
+.not-found {
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+h3 {
+  font-family: ThisIsMyFont;
+}
+
+.character__movie-pic {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.right-div__character {
+  padding: 0 10px;
+}
+
+h3 {
+  overflow: hidden;
+  text-align: center;
+  color: white;
+  font-weight: 200;
+  position: relative;
+  white-space: nowrap;
+  margin: 40px 5px 0;
+}
+
+.character__houses-pic {
+  position: relative;
+  float: right;
+  width: 10%;
+}
+
+.main__name {
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.character__bio {
+  font-size: 14px;
+  color: rgb(217, 215, 215);
+
+}
+
+.character__name {
+  color: white;
+}
+
+p {
+  font-weight: 100;
+}
+
+.not-found {
+  text-align: center;
+  margin-top: 70px;
+  font-weight: 400;
+  font-size: 17px;
+  color: rgb(217, 215, 215);
 }

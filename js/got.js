@@ -16,9 +16,9 @@ function successGetGameOfThronesCharacterDatas(xhttp) {
   var aliveChar = listCharastersAlive(userDatas);
   createStartingElements();
   sortingInAbcOrder(aliveChar);
-  createListingElements(aliveChar);
+  listingPortaits(aliveChar);
   searchButton(aliveChar);
-  eventListenerOnAllCharacters(aliveChar);
+  eventListenerOnPortraits(aliveChar);
 }
 
 getGameOfThronesCharacterDatas(
@@ -28,31 +28,6 @@ getGameOfThronesCharacterDatas(
 
 // Live servert használd mindig!!!!!
 /* IDE ÍRD A FÜGGVÉNYEKET!!!!!! NE EBBE AZ EGY SORBA HANEM INNEN LEFELÉ! */
-
-function createStartingElements() {
-  var leftDiv = document.createElement('div');
-  var rightDiv = document.createElement('div');
-  var newDiv = document.createElement('div');
-  var input = document.createElement('input');
-  var button = document.createElement('button');
-  leftDiv.setAttribute('class', 'left-div');
-  rightDiv.setAttribute('class', 'right-div');
-  newDiv.setAttribute('class', 'righ-div__character');
-  input.setAttribute('id', 'right-div__input');
-  button.setAttribute('id', 'right-div__button');
-  button.innerHTML = 'Kereses';
-  document.body.appendChild(leftDiv);
-  rightDiv.appendChild(newDiv);
-  rightDiv.appendChild(button);
-  rightDiv.appendChild(input);
-  document.body.appendChild(rightDiv);
-}
-
-function sortingInAbcOrder(data) {
-  data.sort(function sort(a, b) {
-    return a.name.localeCompare(b.name);
-  });
-}
 
 function listCharastersAlive(data) {
   var aliveChar = [];
@@ -64,71 +39,91 @@ function listCharastersAlive(data) {
   return aliveChar;
 }
 
+function createStartingElements() {
+  var sidebar = document.querySelector('.right-div');
+  var newDiv = document.createElement('div');
+  var input = document.createElement('input');
+  var button = document.createElement('button');
+  newDiv.setAttribute('class', 'right-div__character');
+  input.setAttribute('id', 'right-div__input');
+  input.setAttribute('placeholder', 'Search a character');
+  button.setAttribute('id', 'right-div__button');
+  button.innerHTML = 'Search';
+  sidebar.appendChild(newDiv);
+  sidebar.appendChild(button);
+  sidebar.appendChild(input);
+}
+
+function sortingInAbcOrder(data) {
+  data.sort(function sort(a, b) {
+    return a.name.localeCompare(b.name);
+  });
+}
 
 // portrek kiiratasa
-function createListingElements(data) {
+function listingPortaits(data) {
   var leftDiv = document.querySelector('.left-div');
   for (var i = 0; i < data.length; i += 1) {
     leftDiv.innerHTML += `
-    <div>
-    <img class="click-on" src="${data[i].portrait}" alt="${data[i].name}">
-    <br>
-    <span>${data[i].name}</span>
+    <div class="left-div__main">
+      <img class="main__click-on" src="${data[i].portrait}" alt="${data[i].name}">
+      <br>
+      <span class="main__name">${data[i].name}</span>
     </div>
   `;
   }
 }
 
 function searchButton(data) {
-  document.querySelector('#right-div__button').addEventListener('click', function () {
+  document.querySelector('#right-div__button').addEventListener('click', function fn() {
     searchInCharacters(data);
   });
 }
 
 function searchInCharacters(data) {
-  var userInput = document.getElementById('right-div__input').value;
-  var rightDiv = document.querySelector('.righ-div__character');
+  var userInput = document.querySelector('#right-div__input').value;
+  var rightDivCharacter = document.querySelector('.right-div__character');
   for (var i = 0; i < data.length; i += 1) {
     if (userInput.toLowerCase() === data[i].name.toLowerCase()) {
-      createRightDiv(data[i], rightDiv);
+      infoSelectedCharacter(data[i], rightDivCharacter);
       i = data.length;
     } else {
-      noInfoOfCharacter(rightDiv);
+      noInfoOfCharacter(rightDivCharacter);
     }
   }
 }
 
-function createRightDiv(character, element) {
-  element.innerHTML = `
-    <img src="${character.picture}" alt="${character.name}"><br>
-    <span>${character.name}</span>`;
+function infoSelectedCharacter(character, target) {
+  target.innerHTML = `
+    <img class="character__movie-pic" src="${character.picture}" alt="${character.name}"><br>
+    <span class="character__name" >${character.name}</span>`;
   if (character.house) {
-    element.innerHTML +=
-      `<img src="assets/houses/${character.house}.png">`;
+    target.innerHTML +=
+      `<img class="character__houses-pic" src="assets/houses/${character.house}.png">`;
   }
-  element.innerHTML += `<p>${character.bio}</p>`;
+  target.innerHTML += `<p class="character__bio">${character.bio}</p>`;
 }
 
-function noInfoOfCharacter(element) {
-  element.innerHTML = `
-    <p>Character not found</p>
+function noInfoOfCharacter(target) {
+  target.innerHTML = `
+    <p class="not-found">Character not found</p>
   `;
 }
 
-function eventListenerOnAllCharacters(data) {
-  var clickOnImages = document.querySelectorAll('.click-on');
+function eventListenerOnPortraits(data) {
+  var clickOnImages = document.querySelectorAll('.main__click-on');
   for (var i = 0; i < clickOnImages.length; i += 1) {
-    clickOnImages[i].addEventListener('click', function () {
+    clickOnImages[i].addEventListener('click', function fn() {
       clickOnCharacters(data, this.alt);
     });
   }
 }
 
 function clickOnCharacters(data, character) {
-  var rightDiv = document.querySelector('.righ-div__character');
+  var rightDiv = document.querySelector('.right-div__character');
   for (var i = 0; i < data.length; i += 1) {
     if (data[i].name === character) {
-      createRightDiv(data[i], rightDiv);
+      infoSelectedCharacter(data[i], rightDiv);
     }
   }
 }
