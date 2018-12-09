@@ -13,9 +13,11 @@ function successGetGameOfThronesCharacterDatas(xhttp) {
   // Nem szabad globálisba kitenni a userDatas-t!
   var userDatas = JSON.parse(xhttp.responseText);
   // Innen hívhatod meg a többi függvényed
-  sortingInAbcOrder(userDatas);
-  listGotCharacters(userDatas);
-
+  var aliveChar = listCharastersAlive(userDatas);
+  createStartingElements();
+  sortingInAbcOrder(aliveChar);
+  createListingElements(aliveChar);
+  searchButton(aliveChar);
 }
 
 getGameOfThronesCharacterDatas(
@@ -26,38 +28,69 @@ getGameOfThronesCharacterDatas(
 // Live servert használd mindig!!!!!
 /* IDE ÍRD A FÜGGVÉNYEKET!!!!!! NE EBBE AZ EGY SORBA HANEM INNEN LEFELÉ! */
 
+function createStartingElements() {
+  var leftDiv = document.createElement('div');
+  var rightDiv = document.createElement('div');
+  var newDiv = document.createElement('div');
+  var input = document.createElement('input');
+  var button = document.createElement('button');
+  leftDiv.setAttribute('class', 'left-div');
+  rightDiv.setAttribute('class', 'right-div');
+  newDiv.setAttribute('class', 'righ-div__character');
+  input.setAttribute('id', 'right-div__input');
+  button.setAttribute('id', 'right-div__button');
+  button.innerHTML = 'Kereses';
+  document.body.appendChild(leftDiv);
+  rightDiv.appendChild(newDiv);
+  rightDiv.appendChild(button);
+  rightDiv.appendChild(input);
+  document.body.appendChild(rightDiv);
+}
+
 function sortingInAbcOrder(data) {
   data.sort(function sort(a, b) {
     return a.name.localeCompare(b.name);
   });
 }
 
-function listGotCharacters(data) {
+function listCharastersAlive(data) {
+  var aliveChar = [];
   for (var i = 0; i < data.length; i += 1) {
     if (!data[i].dead) {
-      createListingElements(data[i]);
+      aliveChar.push(data[i]);
     }
+  }
+  return aliveChar;
+}
+
+
+// portrek kiiratasa
+function createListingElements(data) {
+  var leftDiv = document.querySelector('.left-div');
+  for (var i = 0; i < data.length; i += 1) {
+    leftDiv.innerHTML += `
+    <div>
+    <img src="${data[i].portrait}" alt="${data[i].name}">
+    <br>
+    <span>${data[i].name}</span>
+    </div>
+  `;
   }
 }
 
-function createListingElements(character) {
-  var leftDiv = document.querySelector('.left-div');
-  leftDiv.innerHTML += `
-    <div>
-    <img src="${character.portrait}" alt="${character.name}">
-    <br>
-    <span>${character.name}</span>
-    </div>
-  `;
+function searchButton(data) {
+  document.querySelector('#right-div__button').addEventListener('click', function () {
+    searchInCharacters(data);
+  });
 }
 
 function searchInCharacters(data) {
-  var userInput = document.getElementById('right-div__searchbox');
-  userInput = userInput.value.toLowerCase();
-  var rightDiv = document.querySelector('.right-div');
+  var userInput = document.getElementById('right-div__input').value;
+  var rightDiv = document.querySelector('.righ-div__character');
   for (var i = 0; i < data.length; i += 1) {
-    if (userInput === data.toLowerCase()) {
-      rightDiv.innerHTML = createRightDiv(data[i], rightDiv);
+    if (userInput.toLowerCase() === data[i].name.toLowerCase()) {
+      createRightDiv(data[i], rightDiv);
+      i = data.length;
     } else {
       noInfoOfCharacter(rightDiv);
     }
@@ -66,24 +99,14 @@ function searchInCharacters(data) {
 
 function createRightDiv(character, element) {
   element.innerHTML = `
-    <h2>Game of Thrones</h2>
-    <img src="${character.picture}" alt="${character.name}">
+    <img src="${character.picture}" alt="${character.name}"><br>
     <span>${character.name}</span>
-    <div>${character.bio}</div>
-    <button id="right-div__searchbutton">Kereses</button>
-    <input type="text" id="right-div__searchbox">
+    <p>${character.bio}</p>
   `;
 }
 
 function noInfoOfCharacter(element) {
   element.innerHTML = `
-    <h2>Game of Thrones</h2>
     <p>Character not found</p>
-    <button id="right-div__searchbutton">Kereses</button>
-    <input type="text" id="right-div__searchbox">
   `;
-}
-
-function characterOnClick() {
-
 }
