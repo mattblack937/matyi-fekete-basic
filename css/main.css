@@ -3,9 +3,86 @@ body {
   padding: 0;
 }
 
+button {
+  position: fixed;
+  bottom: 10px;
+  right: 16.5%;
+  border-radius: 3px;
+  border: 2px solid #aaa;
+  outline: none;
+  transition-duration: 0.5s;
+  background-color: #aaa;
+  font-weight: 600;
+}
+
+button:hover {
+  box-shadow: 0 0 6px 0 rgb(160, 140, 102);
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+button,
+span,
+input,
+.not-found {
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+.character__movie-pic {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 4px;
+}
+
+.character__bio {
+  font-size: 14px;
+  color: rgb(217, 215, 215);
+}
+
+.character__name {
+  color: white;
+}
+
+.character__houses-pic {
+  position: relative;
+  float: right;
+  width: 10%;
+}
+
+.fade-away {
+  opacity: 0.4;
+}
+
 @font-face {
   font-family: "ThisIsMyFont";
   src: url(/fonts/GameofThrones.ttf)
+}
+
+h3 {
+  font-family: ThisIsMyFont;
+  overflow: hidden;
+  text-align: center;
+  color: white;
+  font-weight: 200;
+  position: relative;
+  white-space: nowrap;
+  margin: 40px 5px 0;
+}
+
+input {
+  position: fixed;
+  bottom: 10px;
+  right: 1%;
+  border-radius: 3px;
+  border: 2px solid #aaa;
+  transition-duration: 0.5s;
+  outline: none;
+  width: 180px;
+  padding: 1px;
+}
+
+input:focus {
+  box-shadow: 0 0 7px 0 rgb(160, 140, 102);
 }
 
 .left-div {
@@ -16,14 +93,6 @@ body {
   background-size: 850px;
   background-position: top;
   padding: 10px;
-}
-
-.right-div {
-  background-color: rgb(83, 83, 83);
-  right: 0;
-  position: fixed;
-  height: 100%;
-  width: 23%;
 }
 
 .left-div__main {
@@ -46,94 +115,9 @@ body {
   transform: scale(1.2);
 }
 
-input {
-  position: fixed;
-  bottom: 10px;
-  right: 1%;
-  border-radius: 3px;
-  border: 2px solid #aaa;
-  transition-duration: 0.5s;
-  outline: none;
-  width: 180px;
-  padding: 1px;
-}
-
-input:focus {
-  box-shadow: 0 0 7px 0 rgb(160, 140, 102);
-}
-
-button {
-  position: fixed;
-  bottom: 10px;
-  right: 16.5%;
-  border-radius: 3px;
-  border: 2px solid #aaa;
-  outline: none;
-  transition-duration: 0.5s;
-  background-color: #aaa;
-  font-weight: 600;
-}
-
-button:hover {
-  box-shadow: 0 0 6px 0 rgb(160, 140, 102);
-  transform: scale(1.03);
-  cursor: pointer;
-}
-
-span,
-button,
-input,
-.not-found {
-  font-family: 'Cinzel Decorative', cursive;
-}
-
-h3 {
-  font-family: ThisIsMyFont;
-}
-
-.character__movie-pic {
-  width: 100%;
-  padding: 10px 0;
-  border-radius: 4px;
-}
-
-.right-div__character {
-  padding: 0 10px;
-}
-
-h3 {
-  overflow: hidden;
-  text-align: center;
-  color: white;
-  font-weight: 200;
-  position: relative;
-  white-space: nowrap;
-  margin: 40px 5px 0;
-}
-
-.character__houses-pic {
-  position: relative;
-  float: right;
-  width: 10%;
-}
-
 .main__name {
   font-size: 9px;
   font-weight: 600;
-}
-
-.character__bio {
-  font-size: 14px;
-  color: rgb(217, 215, 215);
-
-}
-
-.character__name {
-  color: white;
-}
-
-p {
-  font-weight: 100;
 }
 
 .not-found {
@@ -144,6 +128,18 @@ p {
   color: rgb(217, 215, 215);
 }
 
-.fade-away {
-  opacity: 0.4;
+p {
+  font-weight: 100;
+}
+
+.right-div__character {
+  padding: 0 10px;
+}
+
+.right-div {
+  background-color: rgb(83, 83, 83);
+  right: 0;
+  position: fixed;
+  height: 100%;
+  width: 23%;
 }
