@@ -18,6 +18,7 @@ function successGetGameOfThronesCharacterDatas(xhttp) {
   sortingInAbcOrder(aliveChar);
   createListingElements(aliveChar);
   searchButton(aliveChar);
+  eventListenerOnAllCharacters(aliveChar);
 }
 
 getGameOfThronesCharacterDatas(
@@ -70,7 +71,7 @@ function createListingElements(data) {
   for (var i = 0; i < data.length; i += 1) {
     leftDiv.innerHTML += `
     <div>
-    <img src="${data[i].portrait}" alt="${data[i].name}">
+    <img class="click-on" src="${data[i].portrait}" alt="${data[i].name}">
     <br>
     <span>${data[i].name}</span>
     </div>
@@ -100,13 +101,34 @@ function searchInCharacters(data) {
 function createRightDiv(character, element) {
   element.innerHTML = `
     <img src="${character.picture}" alt="${character.name}"><br>
-    <span>${character.name}</span>
-    <p>${character.bio}</p>
-  `;
+    <span>${character.name}</span>`;
+  if (character.house) {
+    element.innerHTML +=
+      `<img src="assets/houses/${character.house}.png">`;
+  }
+  element.innerHTML += `<p>${character.bio}</p>`;
 }
 
 function noInfoOfCharacter(element) {
   element.innerHTML = `
     <p>Character not found</p>
   `;
+}
+
+function eventListenerOnAllCharacters(data) {
+  var clickOnImages = document.querySelectorAll('.click-on');
+  for (var i = 0; i < clickOnImages.length; i += 1) {
+    clickOnImages[i].addEventListener('click', function () {
+      clickOnCharacters(data, this.alt);
+    });
+  }
+}
+
+function clickOnCharacters(data, character) {
+  var rightDiv = document.querySelector('.righ-div__character');
+  for (var i = 0; i < data.length; i += 1) {
+    if (data[i].name === character) {
+      createRightDiv(data[i], rightDiv);
+    }
+  }
 }
