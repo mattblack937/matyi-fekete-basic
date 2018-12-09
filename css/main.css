@@ -55,6 +55,7 @@ input {
   transition-duration: 0.5s;
   outline: none;
   width: 180px;
+  padding: 1px;
 }
 
 input:focus {
@@ -93,6 +94,7 @@ h3 {
 .character__movie-pic {
   width: 100%;
   padding: 10px 0;
+  border-radius: 4px;
 }
 
 .right-div__character {
@@ -140,4 +142,8 @@ p {
   font-weight: 400;
   font-size: 17px;
   color: rgb(217, 215, 215);
+}
+
+.fade-away {
+  opacity: 0.4;
 }

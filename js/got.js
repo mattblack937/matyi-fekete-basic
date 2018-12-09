@@ -114,7 +114,7 @@ function eventListenerOnPortraits(data) {
   var clickOnImages = document.querySelectorAll('.main__click-on');
   for (var i = 0; i < clickOnImages.length; i += 1) {
     clickOnImages[i].addEventListener('click', function fn() {
-      clickOnCharacters(data, this.alt);
+      clickOnCharacters(data, this);
     });
   }
 }
@@ -122,8 +122,61 @@ function eventListenerOnPortraits(data) {
 function clickOnCharacters(data, character) {
   var rightDiv = document.querySelector('.right-div__character');
   for (var i = 0; i < data.length; i += 1) {
-    if (data[i].name === character) {
+    if (data[i].name === character.alt) {
       infoSelectedCharacter(data[i], rightDiv);
+    }
+  }
+  changeOpacity(character);
+}
+
+function changeOpacity(character) {
+  var clickOnImages = document.querySelectorAll('.main__click-on');
+  var decision = decide(clickOnImages, character);
+  if (decision === 0) {
+    chosenIsFaded(clickOnImages, character);
+  } else if (decision === 1) {
+    thereIsAFadedOne(clickOnImages);
+  } else {
+    noFaded(clickOnImages, character);
+  }
+}
+
+function decide(clickOnImages, character) {
+  var decision;
+  if (character.classList.contains('fade-away')) {
+    decision = 0;
+  } else {
+    for (var i = 0; i < clickOnImages.length; i += 1) {
+      if (clickOnImages[i].classList.contains('fade-away')) {
+        decision = 1;
+      } else {
+        decision = -1;
+      }
+    }
+  }
+  return decision;
+}
+
+function chosenIsFaded(clickOnImages, character) {
+  for (var i = 0; i < clickOnImages.length; i += 1) {
+    if (clickOnImages[i].classList.contains('fade-away') && character.alt === clickOnImages[i].alt) {
+      clickOnImages[i].classList.remove('fade-away');
+    } else if (!clickOnImages[i].classList.contains('fade-away')) {
+      clickOnImages[i].classList.add('fade-away');
+    }
+  }
+}
+
+function thereIsAFadedOne(clickOnImages) {
+  for (var i = 0; i < clickOnImages.length; i += 1) {
+    clickOnImages[i].classList.remove('fade-away');
+  }
+}
+
+function noFaded(clickOnImages, character) {
+  for (var i = 0; i < clickOnImages.length; i += 1) {
+    if (clickOnImages[i].alt !== character.alt) {
+      clickOnImages[i].classList.add('fade-away');
     }
   }
 }
