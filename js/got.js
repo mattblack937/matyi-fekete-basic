@@ -83,9 +83,11 @@ function searchButton(data) {
 function searchInCharacters(data) {
   var userInput = document.querySelector('#right-div__input').value;
   var rightDivCharacter = document.querySelector('.right-div__character');
+  var clickOnImages = document.querySelectorAll('.main__click-on');
   for (var i = 0; i < data.length; i += 1) {
     if (userInput.toLowerCase() === data[i].name.toLowerCase()) {
       infoSelectedCharacter(data[i], rightDivCharacter);
+      fadeOnSearch(data[i], clickOnImages);
       i = data.length;
     } else {
       noInfoOfCharacter(rightDivCharacter);
@@ -176,6 +178,16 @@ function thereIsAFadedOne(clickOnImages) {
 function noFaded(clickOnImages, character) {
   for (var i = 0; i < clickOnImages.length; i += 1) {
     if (clickOnImages[i].alt !== character.alt) {
+      clickOnImages[i].classList.add('fade-away');
+    }
+  }
+}
+
+function fadeOnSearch(character, clickOnImages) {
+  for (var i = 0; i < clickOnImages.length; i += 1) {
+    if (clickOnImages[i].classList.contains('fade-away') && character.name === clickOnImages[i].alt) {
+      clickOnImages[i].classList.remove('fade-away');
+    } else if (!clickOnImages[i].classList.contains('fade-away') && character.name !== clickOnImages[i].alt) {
       clickOnImages[i].classList.add('fade-away');
     }
   }
